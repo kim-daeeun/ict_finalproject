@@ -1,0 +1,11 @@
+=\=\=\=\=\=\=
+<<<<<<<=HEAD
+>>>>>>>=branch 'master' of https\://dekim0530@bitbucket.org/dekim0530/ict_final_project.git
+eclipse.preferences.version=1
+encoding//src/main/java/com/ict/ictinfo/bizinfo/controller/BizInfoController.java=UTF-8
+encoding//src/main/java/com/ict/ictinfo/bizinfo/service/BizInfoServiceImpl.java=UTF-8
+encoding//src/main/java/com/ict/ictinfo/main/controller/MainController.java=UTF-8
+encoding//src/main/java/com/ict/ictinfo/main/service/MainServiceImpl.java=UTF-8
+encoding//src/main/java/com/ict/ictinfo/memjoin/controller/MemJoinController.java=UTF-8
+encoding//src/main/webapp/WEB-INF/views/main.jsp=UTF-8
+encoding/<project>=UTF-8

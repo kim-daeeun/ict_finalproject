@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+              "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ict.ictinfo.faqboard.faqdao.FAQDao">
+
+<select id="list" resultType="faq_article">
+		select *
+		from (select rownum rm, ictadmin.*
+      		  from (select articleNum,id,title,to_char(writeDate,'YYYY-MM-DD') as writeDate,depth,hit,fileStatus,
+      		  (select count(*)
+      		   from faqcomments
+      		   where faqboard.articleNum=faqcomments.articleNum) as commentCount
+      				from faqboard
+      				start with groupId=0
+      				CONNECT BY PRIOR articleNum=groupId
+      				order siblings by articleNum desc) ictadmin
+     	)
+		where rm between #{startRow} and #{endRow}
+	</select>
+
+	<select id="getTotalCount" resultType="int">
+		SELECT COUNT(*)
+		FROM FAQBOARD
+	</select>
+	
+	<select id="content" parameterType="String" resultType="faq_article">
+		SELECT faqboard.*,(select count(*)
+						from faqcomments
+						where faqboard.articleNum=faqcomments.articleNum) as commentCount
+		FROM faqboard
+		WHERE ARTICLENUM=#{articleNum}
+	</select>
+	
+	<select id="getFiles" resultType="String" parameterType="String">
+		select storedFname
+		from faqfilelist
+		where articleNum=#{articleNum}
+	</select>
+	
+	<!-- <select id="getContentFiles" resultType="file" parameterType="String">
+		select fileName,storedFname
+		from FAQFILELIST
+		where articleNum=#{articleNum}
+	</select>
+	
+	<select id="getStoredFname" resultType="String" parameterType="String">
+		select storedFname
+		from FAQFILELIST
+		where fileName=#{filename}
+	</select> --> 
+	
+	<insert id="write" parameterType="faq_article" useGeneratedKeys="true" keyProperty="articleNum" keyColumn="articleNum">  
+   		insert into FAQBOARD values(faqboard_SEQ.NEXTVAL, #{id}, #{title}, #{content},0,0,0,SYSDATE,#{fileStatus})
+ 	</insert> 
+	
+	<select id="getNextArticleNum" resultType="int">
+		SELECT faqboard_SEQ.NEXTVAL
+		FROM DUAL
+	</select>
+	
+	<insert id="insertFile" parameterType="faq_file">
+		INSERT INTO FAQFILELIST VALUES(FAQFILELIST_SEQ.NEXTVAL,#{storedFname},#{articleNum})
+	</insert>
+
+	
+	<insert id="reply" parameterType="faq_article" useGeneratedKeys="true" keyProperty="articleNum" keyColumn="articleNum">
+		insert into FAQBOARD values(faqboard_SEQ.NEXTVAL, #{id}, #{title}, #{content},#{depth}+1,0,#{groupId},SYSDATE,#{fileStatus})
+	</insert>
+	
+	<!-- 답글이 있을 경우 답글도 삭제 -->
+	 <delete id="delete" parameterType="String">
+		DELETE
+		FROM FAQBOARD
+		WHERE ARTICLENUM in(SELECT ARTICLENUM
+							FROM FAQBOARD
+							START WITH ARTICLENUM=#{articleNum}
+							CONNECT BY PRIOR articleNum=groupId)
+	</delete>
+	
+	<select id="getDeleteList" parameterType="String" resultType="String"> 
+  		SELECT filenum FROM FAQFILELIST WHERE ARTICLENUM=#{articleNum} 
+ 	</select> 
+	
+	<select id="getUpdateArticle" parameterType="String" resultType="faq_article">
+		SELECT TITLE,CONTENT FROM FAQBOARD WHERE ARTICLENUM=#{articleNum}
+	</select>
+	
+	<update id="updateArticle" parameterType="faq_article">
+	update FAQBOARD
+	set title=#{title}, content=#{content}, fileStatus=#{fileStatus}
+	where articleNum=#{articleNum}
+	</update>
+	
+	<select id="getCommentCount" parameterType="String" resultType="int">
+		SELECT COUNT(*)
+		FROM FAQCOMMENTS
+		WHERE ARTICLENUM=#{articleNum}
+	</select>
+	
+	<!-- collection = 전달받은 인자값
+	item = 전달받은 인자값을 다른 이름으로 대체
+	open 해당 구문이 시작할 때
+	close 해당 구문이 끝날 때
+	separator 한번 이상 반복할 때 반복되는 사이에 해당 문을 넣어줌 -->
+	<delete id="dbDelFileName" parameterType="List">
+		delete
+		from faqfilelist
+		where storedFname IN
+		<foreach collection="list" item="storedFname" open="(" separator="," close=")">
+			#{storedFname}
+		</foreach>
+	</delete>
+	
+	 <delete id="dbDelFileName1" >
+<!--  <delete id="dbDelFileName1" parameterType="List"> -->
+		delete
+		from faqfileList
+		where storedFname IN
+		 <foreach collection="array" item="storedFname" open="(" separator="," close=")">
+    		#{storedFname}  
+  		</foreach>
+	</delete> 
+	
+	
+</mapper>

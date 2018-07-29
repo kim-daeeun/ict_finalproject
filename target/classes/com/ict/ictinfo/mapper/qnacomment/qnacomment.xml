@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+              "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ict.ictinfo.qnacomment.dao.QnaCommentDao">
+
+	<insert id="insertQnaComment" parameterType="qnaComment">
+		INSERT INTO QNACOMMENTS VALUES(QNACOMMENTS_SEQ.NEXTVAL,#{id},#{commentContent},sysdate,#{articleNum})
+	</insert>
+	
+	<select id="getQnaComments" parameterType="HashMap" resultType="qnaComment">
+		select *
+		from (SELECT ID,commentContent,COMMENTDATE
+			  from QNACOMMENTS
+			  where articleNum=#{articleNum}
+			  ORDER BY COMMENTNUM DESC
+			  )
+		WHERE ROWNUM BETWEEN 1 AND #{commentRow}
+	</select>
+	
+</mapper>

@@ -14,6 +14,8 @@ public interface MemJoinDao {
 	
 	public MemJoinDto getJoinUpdate(String id);
 
-	public void joinDelete(MemJoinDto memjoin);
+	public void joinDelete(String id);
+
+	public MemJoinDto joinInfo(String id);
 
 }

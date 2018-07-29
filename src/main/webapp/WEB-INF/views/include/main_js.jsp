@@ -21,95 +21,127 @@
 		
 		});
 	});
+	
+	/* 메인화면 공지사항 링크 */ 
+	 
+	$(document).ready(function(){	 
+		 mChangeNb();
+				
+		$("#tdNba1").add("#tdNba2").add("#tdNbb1").add("#tdNbb2").add("#tdNbc1").add("#tdNbc2").hover(function(){
+			clearTimeout(vChanTxt);
+		},
+		function(){
+			mChangeNb();			
+		});	
+
+	});
+
+	i=0;
+	function mChangeNb(){	
+	
+		let listEndNum = $("#nbListEndNum").val();		
+		
+		let tempa1 = ".a1"+(i+0);
+		let tempa2 = ".a2"+(i+0);
+		
+		let a1Num=$(tempa1).val();
+		let a2Title=$(tempa2).val();		
+		let a1NumHtml=a1Num + "<br/><span class='label label-warning'>New </span>";		
+
+		$("#tdNba1").hide();
+		$("#tdNba2").hide();		
+		
+		$("#tdNba1").fadeOut();
+		$("#tdNba2").fadeOut();	
+			
+		$("#tdNba1").html(a1NumHtml).fadeIn("slow");
+		$("#tdNba2").text(a2Title).fadeIn("slow");	
+		
+		
+		let tempb1 = ".a1"+(i+1);
+		let tempb2 = ".a2"+(i+1);
+		
+		let b1Num=$(tempb1).val();
+		let b2Title=$(tempb2).val();
+		let b1NumHtml=b1Num + "<br/><span class='label label-warning'>New </span>";	
+		
+	
+		$("#tdNbb1").hide();
+		$("#tdNbb2").hide();		
+		
+		$("#tdNbb1").fadeOut();
+		$("#tdNbb2").fadeOut();	
+			
+		$("#tdNbb1").html(b1NumHtml).fadeIn("slow");
+		$("#tdNbb2").text(b2Title).fadeIn("slow");		
+		
+		
+	
+		let tempc1 = ".a1"+(i+2);
+		let tempc2 = ".a2"+(i+2);
+		
+		let c1Num=$(tempc1).val();
+		let c2Title=$(tempc2).val();
+		let c1NumHtml=c1Num + "<br/><span class='label label-warning'>New </span>";
+		
+
+		$("#tdNbc1").hide();
+		$("#tdNbc2").hide();		
+		
+		$("#tdNbc1").fadeOut();
+		$("#tdNbc2").fadeOut();	
+			
+		$("#tdNbc1").html(c1NumHtml).fadeIn("slow");
+		$("#tdNbc2").text(c2Title).fadeIn("slow");
+		
+		
+		i++;				
+		if(i>listEndNum-2){
+			i=0;
+		}	
+		vChanTxt = setTimeout(mChangeNb,3000);						
+	}	
+	
+	
+
+	
+	
+	
+	$(function(){
+		
+		$.ajax({
+			 type:"Post",
+			 url:"/ictinfo/empRate.ict",	
+			 dataType:"json", 
+			 success:function(data){
+				 
+
+				//alert(JSON.stringify(data));
+				//alert(data["job-search"].jobs.job[0].company.name.content);
+
+				 
+				 let vEmpUrl = data["job-search"].jobs.job[0].company.name.href;				 
+				 let vShortCut = "<a href='" + vEmpUrl + "' class='pull-right' target='_blank'>more...</a>";			 
+				 
+				 let vTemp = data["job-search"].jobs.job[0].company.name.content;
+				 let vCompany = "<a href='" + vEmpUrl + "'>" + vTemp + "</a>";  
+				 
+				 let vPart = data["job-search"].jobs.job[0].position.industry.content;
+				 let vEmpType = data["job-search"].jobs.job[0].position["experience-level"].content;
+				 
+				 $("#empInfoShortCut").html(vShortCut);
+				 $("#empInfo01").html(vCompany);
+				 $("#empInfo02").html(vPart);
+				 $("#empInfo03").html(vEmpType);
+			 }			
+
+		});			
+
+	}); 
 
 
 	
-		<!-- nav 마우스 hover 를 이용하여 하위 메뉴 나오게 하기 -->
-
-        /*
-              $(document).ready(function(){
-
-                  $('.dropdown,.dropdown-menu').hover(function(){
-
-                      if($(window).width()>=768){
-                          $(this).addClass('open').trigger('shown.bs.dropdown', relatedTarget)
-                          return false;
-                      }
-
-                  },function() {
-                      if ($(window).width() >= 768) {
-                          $(this).removeClass('open').trigger('hidden.bs.dropdown', relatedTarget)
-                          return false;
-                      }
-                  },function () {
-                      $(this).css('background-color','red')
-                  }
-
-            })
-
-        })
-        */
-
-
-/*
-                $(function(){
-                    $("#myNavbar ul li").hover(function(){
-                        $('ul:first',this).show();
-                    }, function(){
-                        $('ul:first',this).hide();
-                    });
-                 });
-*/
-/*
-        $(function(){
-            $("ul li").mouseover(function(){
-                $(this).children("ul").show();
-                $(this).find("a").addClass("on");
-            });
-            $("ul li").mouseout(function(){
-                $(this).children("ul").hide();
-                $(this).find("a").removeClass("on");
-            });
-        });
-*/
-
-/*
-        $(document).on('mouseover', '.dropdown', function () {
-            $('.dropdown-menu').slideDown(200);
-        });
-        $(document).on('mouseover', 'div', function () {
-            if (!$(this).hasClass('topMenu')) {
-                $('.dept02').slideUp(200);
-            }
-        });
-*/
-
-/*
-        $(document).ready(function(){
-            $(".dropdown").hover(function(){
-                var submenu = $(this).next("ul");
-
-                // submenu 가 화면상에 보일때는 위로 보드랍게 접고 아니면 아래로 보드랍게 펼치기
-                if( submenu.is(":visible") ){
-                    submenu.slideUp(200);
-                }else{
-                    submenu.slideDown(200);
-                }
-            }).mouseover(function(){
-                $(this).next("ul").slideDown();
-            });
-
-            // menu class 중에 두번째 있는 menu 의 하위에 있는 a태그에 클릭 이벤트를 발생시킨다.
-            $(".menu :eq(1)>a").click();
-        });
-*/
-
-
-
-
-
-
-
+	
 
 	</script>
 

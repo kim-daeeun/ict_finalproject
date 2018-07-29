@@ -31,4 +31,11 @@
 	</select>	
 	
 	
+	<select id="selectNoticeBoard" parameterType="String" resultType="mainNbDto">
+		select * 
+		from NoticeBoard 
+        where depth=0
+		order by articleNum desc
+	</select>	
+	
 </mapper>

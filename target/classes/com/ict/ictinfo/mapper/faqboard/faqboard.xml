@@ -32,6 +32,13 @@
 		WHERE ARTICLENUM=#{articleNum}
 	</select>
 	
+	<update id="updateHit" parameterType="String">
+		update faqboard 
+		set hit=hit+1 
+		where articleNum=#{articleNum}
+	</update>
+	
+	
 	<select id="getFiles" resultType="String" parameterType="String">
 		select storedFname
 		from faqfilelist

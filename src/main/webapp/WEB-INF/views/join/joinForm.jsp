@@ -1,18 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 
 <head>
 
-<title>Main Page</title>
+<title>회원가입</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>   
-
+<link href="resources/style.css" rel="stylesheet" type="text/css">
+<link href="./img/img_main/logo_ict.png" rel="shortcut icon">
 <%-- 새로 추가할 CDN 입력하는 부분 --%>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <%-- 새로 추가할 CDN 입력하는 부분 --%>
@@ -34,6 +35,13 @@
 		margin : 50px 0px;
 		text-align: center;
 	}
+	
+	#joinMain{
+		margin:50px 10px;
+		width:100%;
+		height:200px;
+	}
+
  	.form-control{
 		margin : 0px 5px;
 	} 
@@ -62,6 +70,8 @@
 		margin-right:10px;
 		float:right;
 	}
+	
+	
 </style>
 
 </head>
@@ -71,11 +81,11 @@
 <%@include file="./../include/main_header.jsp"%>
 
 		<div class="container_body">
-  <h2>ICT 취준생을 위한 정보망</h2>
+  <h2>ICT 취준생을 위한 정보망[회원가입]</h2>
   
+  	<img src="./img/img_join/img_memDelete.jpg" id="joinMain">
   
-  
-<form action="/ictinfo/joinConfirm.bbs" method="post" >
+<form action="/ictinfo/joinConfirm.ict" method="post" >
 	<div class="form-group">
       <label for="name">이름:</label>
       <input type="text" class="form-control" id="name" placeholder="이름을 입력해주세요" name="name">
@@ -111,7 +121,7 @@
     </div>
     <div class="form-group">
 	    <button type="submit" class="btn btn-default" id="join">확인</button>
-	    <button type="reset" class="btn btn-default" id="cancel">취소 </button>
+	    <button type="reset" class="btn btn-default" id="cancel" onclick="document.location.href='/ictinfo/main.ict'">취소 </button>
     </div>
   </form>
 </div>
@@ -138,7 +148,7 @@ $.ajaxSetup({
 	 $("#id").on("blur", function(){	
 		 if($("#id").val().trim().length!=0){
 		 $.ajax({			 
-			url:"/ictinfo/joinIdCheck.bbs",					
+			url:"/ictinfo/joinIdCheck.ict",					
 			data:{				
 				id:$('#id').val()				
 			},
@@ -149,7 +159,7 @@ $.ajaxSetup({
 //				 	let reg= new RegExp('//');
 					let result = reg.test($("#id").val().trim());
 					if(!result){
-						html="<b>아이디는 6~15자로 만들어야 합니다.</b>";
+						html="<b>아이디는 6~15자 영문자 숫자 조합입니다.</b>";
 						$("#idCheckStatus").html(html).css("color","red");
 						$("#id").focus();
 					}
@@ -243,7 +253,7 @@ $.ajaxSetup({
 // 빈 문자열로 치환 -> 기존 문자열 삭제
 	function checkName(name){
 		if(name.length<2||name>5){
-			alert("이름을 정확히 입력해주세요.");
+			//alert("이름을 정확히 입력해주세요.");
 			return false;
 		}
 	}
@@ -277,7 +287,7 @@ $.ajaxSetup({
 // 	let reg= new RegExp('//');
 		let result = reg.test(email);
 		if(!result){
-			alert("이메일 형식에 오류가 있습니다.");
+			//alert("이메일 형식에 오류가 있습니다.");
 			return false;
 		}
 	}

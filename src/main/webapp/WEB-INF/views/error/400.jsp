@@ -8,6 +8,6 @@
 </head>
 <body>
  잘못 입력했습니다.<br />
-<a href="/ictinfo/human.bbs">메인으로 가기</a>
+<a href="/ictinfo/main.ict">메인으로 가기</a>
 </body>
 </html>

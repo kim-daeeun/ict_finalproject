@@ -6,13 +6,14 @@
 
 <head>
 
-<title>글쓰기</title>
+<title>FAQ[글쓰기]</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>   
-
+<link href="resources/style.css" rel="stylesheet" type="text/css">
+<link href="./img/img_main/logo_ict.png" rel="shortcut icon">
 <%-- 새로 추가할 CDN 입력하는 부분 시작 --%>
 	<!-- 예 : <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script> -->
 <%-- 새로 추가할 CDN 입력하는 부분 끝--%>
@@ -82,14 +83,14 @@ input.upload {
 
 
 </head>
-<body style="height:1020px">
+<body style="height:1080px" onload="init()">
 
 <%-- main_header.jsp --%>
 <%@include file="./../include/main_header.jsp"%>
 
 	<div class="container_body">
 	
-	<h2 style="text-align:center">글쓰기</h2><br>			
+	<h2 style="text-align:center">FAQ[글쓰기]</h2><br>			
 		
 <body>
 	<div class="faqwrite">
@@ -99,11 +100,11 @@ input.upload {
 	 			 <td>작성자 : ${id}</td>
 	 		</tr>
 	 		<tr>	 
-			 <td><input type="text" name="title"  class="form-control" placeholder="제목을 입력해 주세요"> </td>			 
+			 <td><input type="text" name="title"  class="form-control" placeholder="제목을 입력해 주세요" id="faqwrite_title"> </td>			 
 			</tr>
 			<tr>
 			  <td colspan="2">
-			  <textarea cols="100" rows="20" name="content" ></textarea>
+			  <textarea cols="100" rows="20" name="content" class="form-control"></textarea>
 			  </td>
 		    </tr>
 		    
@@ -196,7 +197,7 @@ $(".fileDrop").on("drop", function(event){
 		  type: 'POST',
 		  success: function(data){
 			  let str ="";				 
-			  alert(data);				  
+			  				  
 			  $.each(data,function(index, fileName){					  					 
 				  if(checkImageType(fileName)){						 
 					  str ="<div><img src='faqdisplayFile.ict?fileName="+fileName+"'/>"	
@@ -235,7 +236,7 @@ $(".uploadedList").on("click", "small", function(event){
 	   success:function(result){
 		   if(result == 'deleted'){				   
 			   that.parent("div").remove();
-			   alert("삭제성공");
+			   
 		   }
 	   }
    });
@@ -258,7 +259,7 @@ $("#faqwrite_delete").on("click", function(event){
 	   success:function(result){
 		   if(result == 'deleted'){
 			   $(".uploadedList").children().remove();
-			   alert("삭제성공");
+			   
 		   }
 	   }
    });
@@ -278,7 +279,7 @@ function getImageLink(fileName){
 	//front -> \2018\05\24\s까지 제거
 	let end = fileName.substr(14);
 	//end ->_제거
-	alert(front + end);		
+//	alert(front + end);		
 	return front + end;
 	//end와 front를 합하여 파일이름을 원본파일이름으로 바꿈
 }
@@ -290,6 +291,10 @@ function getOriginalName(fileName){
 	
 	let idx = fileName.indexOf("_") + 1 ;
 	return fileName.substr(idx);	
+}
+
+function init(){
+	document.getElementById("faqwrite_title").focus();
 }
 </script>
 

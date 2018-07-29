@@ -41,8 +41,6 @@ public class MemJoinServiceImpl implements MemJoinService {
 //			최종적으로는 ESAPI같은 보안라이브러리를 사용
 //			id=SQLFilter.sqlFiltering(id);
 		
-		System.out.println("serviceImpl01 >>>>>>>>>>>>>id : " + id);		
-		
 			String dbPass=memjoinDao.login(id);
 			
 			String result = null;			
@@ -51,10 +49,7 @@ public class MemJoinServiceImpl implements MemJoinService {
 				
 			}else {
 				if(password.equals(dbPass)) {
-					
-					System.out.println("serviceImpl02 >>>>>>>>>>>>>id : " + id);
-					System.out.println("serviceImpl02 >>>>>>>>>>>>>pass : " + password);
-					
+										
 					session.setAttribute("id", id);
 					result = "2";		
 
@@ -63,8 +58,14 @@ public class MemJoinServiceImpl implements MemJoinService {
 				}
 			}
 			
-		System.out.println("serviceImpl03 >>>>>>>>>>>>>id : " + result);
 		return result;
+	}
+
+
+	@Override
+	public MemJoinDto joinInfo(String id) {
+		// TODO Auto-generated method stub
+		return memjoinDao.joinInfo(id);
 	}
 
 
@@ -82,17 +83,35 @@ public class MemJoinServiceImpl implements MemJoinService {
 
 
 	@Override
-	public void joinDelete(MemJoinDto memjoin) {
-		
-		String dbPass=memjoinDao.login(memjoin.getId());
-		if(dbPass!=null) {
-			if(dbPass.equals(memjoin.getPassword())) {
-				memjoinDao.joinDelete(memjoin);
-			}
-		}	
-		else {
-			System.out.println("비밀번호를 잘못 입력하였습니다.");
-		}
+	public void joinDelete(String id) {
+
+				memjoinDao.joinDelete(id);
 	}
-	
+
+
+	@Override
+	public String joinPassChk(String password, HttpSession session) {
+
+		String id = (String) session.getAttribute("id");
+		String dbPass=memjoinDao.login(id);
+		String result = null;
+		
+		if(password==null) {
+			result = "1";
+			
+		}else {
+			if(dbPass.equals(password)) {
+									
+				result = "3";
+
+			}else {
+				result="2";
+			}
+		}
+		
+		return result;
+	}
+
+
+
 }

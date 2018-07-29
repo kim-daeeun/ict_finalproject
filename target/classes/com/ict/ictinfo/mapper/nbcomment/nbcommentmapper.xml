@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- mybatis-3-mapper.dtd 주의 할것 -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+
+<!-- namespace는 여기의 bbs.xml 파일의 호출할때 사용한다 -->
+<!-- article 대신 BBSDto를 적으려면 풀네임 을 적어야 한다 -->
+<mapper namespace="com.ict.ictinfo.nbcomment.dao.NbCommentDao">
+
+ 		
+	 <insert id="insertComment" parameterType="nbCommentDtoAlias" >
+	 
+	 	insert into nbcomments values(nbcomments_seq.nextval, #{id}, #{commentContent},
+	 								sysdate, #{articleNum})
+	 
+	 </insert>
+
+	<select id="getComments" parameterType="java.util.HashMap" resultType="nbCommentDtoAlias">
+                        
+		SELECT *
+		FROM (SELECT ID, COMMENTCONTENT, COMMENTDATE, ARTICLENUM
+				FROM nbcomments
+				WHERE ARTICLENUM=#{articleNum}
+				ORDER BY commentNum DESC)
+		WHERE ROWNUM BETWEEN 1 and #{commentRow}
+			
+	</select>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+
+
+	select는 무조건 resultType 이있어야 한다
+	<select id="getTotalCount" resultType="int">
+		SELECT COUNT(*) FROM BBS1	
+	</select>
+
+
+
+	
+	
+	로그인 창 뿌려주는 화면
+	<select id="login" parameterType="String" resultType="String">
+			select pass from login where id=#{id}
+	</select>
+
+
+
+
+	글을 선택했을경우 뿌려주는 화면
+	<select id="content" parameterType="int" resultType="article"> 
+		SELECT * FROM BBS1 WHERE ARTICLENUM=#{articleNum}	
+	</select>
+
+
+
+	답글 저장할때
+ 		글번호가 groupid 가 심어져 있다
+	 <insert id="reply" parameterType="article" >
+	  INSERT INTO BBS1 VALUES(bbs_seq.nextval,#{id},#{title},
+	  						#{content},#{depth}+1,0,#{groupId},
+	  						SYSDATE,#{fileStatus})
+	 </insert>
+
+
+
+
+
+	 <delete id="delete" parameterType="String">
+	  DELETE FROM BBS1 WHERE ARTICLENUM=#{articleNum}
+	 </delete>
+
+
+
+
+
+	수정하기 클릭했을경우
+	<select id="getUpdateArticle" parameterType="String" resultType="article"> 
+		SELECT TITLE, CONTENT FROM BBS1 WHERE ARTICLENUM=#{articleNum}	
+	</select>
+
+
+
+
+
+	수정후 글을 쓰고 수정하기를 클릭했을 경우
+	<update id="updateArticle" parameterType="article">
+	    UPDATE BBS1
+	    SET TITLE=#{title}, CONTENT=#{content}  
+	    WHERE ARTICLENUM=#{articleNum}
+	 </update>
+	 
+	 
+	
+	
+	
+	2018-05-14  //////////////////////////////////////////////
+	
+글을 쓰고 저장하기 
+	<insert id="write" parameterType="article">		
+		INSERT INTO BBS1 VALUES(BBS_SEQ.NEXTVAL,#{id},#{title},
+								#{content},0,0,0,SYSDATE,0)
+	</insert> 
+
+		글을 쓰고 저장하기 위에 것이 수정됨
+	<insert id="write" parameterType="article">		
+		INSERT INTO BBS1 VALUES(
+			<if test="articleNum==0">
+				BBS_SEQ.NEXTVAL
+			</if>
+			<if test="articleNum!=0">
+				#{articleNum}
+			</if>			
+				, #{id}, #{title}, #{content},0,0,0,SYSDATE,#{fileStatus})
+	</insert> 
+	
+	 
+	 	파일 저장하기
+	<select id="getNextArticleNum" resultType="int">
+		 select bbs_seq.nextval from dual
+	</select>
+	
+	
+	파일업로드가 있으면 articleNum를 가져오므로 0이 아니고, 없으면 안가져왔으므로 0이다
+	 <insert id="insertFile" parameterType="file">
+  		INSERT INTO FILELIST VALUES(FILE_SEQ.NEXTVAL, #{originFname}, #{storedFname}, #{fileLength}, #{articleNum}) 
+ 	</insert>
+ 	
+
+	2018-05-15 ///////////////////////////////////////////////////////////////////
+	bbsDTO, fileDTO를 2개에서 가져온다
+ 	
+ 	글목록 뿌려주는 화면
+	<select id="list" resultType="article">
+		SELECT * FROM (SELECT ROWNUM RM, HUMAN.* FROM 
+							(SELECT articleNum, id, title, writeDate, hit, fileStatus 
+								FROM BBS1 
+				   		  		START WITH groupId=0
+				   		  		CONNECT BY PRIOR articleNum=groupId
+				   		  		ORDER SIBLINGS BY articleNum desc
+			   		  		) HUMAN
+		   		  ) 
+		WHERE RM BETWEEN #{startRow} AND #{endRow}
+		
+	</select>	
+
+
+
+
+2018-05-15 //////////////////////////////////////////////////////
+
+ 	파일 뿌려주는 화면
+	<select id="getFiles" resultType="file" parameterType="int">
+		  select originFname, storedFname, fileLength
+		  	from filelist
+		  	where articleNum=#{articleNum}
+	 </select>
+ -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.ict.ictinfo.bizinfo.dto.BizInfoDto;
 import com.ict.ictinfo.bizinfo.dto.GetBizDto;
 import com.ict.ictinfo.main.dto.MainDto;
+import com.ict.ictinfo.main.dto.MainNbDto;
 
 @Repository
 public class MainDaoImpl implements MainDao {
@@ -27,7 +28,10 @@ public class MainDaoImpl implements MainDao {
         return sqlSession.selectList(nameSpace+".selectBizInfo");
     }
 
-
+    @Override
+    public List<MainNbDto> selectNoticeBoard() { 
+        return sqlSession.selectList(nameSpace+".selectNoticeBoard");
+    }
 
 
 }

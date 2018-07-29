@@ -32,7 +32,10 @@
 			
 			
 			
-			<li><a href="weather.ict"><span class="glyphicon glyphicon-cloud"></span> 사이트맵</a></li>
+			<li><a href="sitemap.ict"><span class="glyphicon glyphicon-cloud"></span> 사이트맵</a></li>
+			<li><a href="fpAnnouncement.ict"><span class="glyphicon glyphicon-play"></span> 발표</a></li>
+			<li><a href="admin_main.admin"><span class="glyphicon glyphicon-cog"></span> 관리자</a></li>
+			<li><a href="test.ict"><span class="glyphicon glyphicon-refresh"></span> test</a></li>
 		</ul>
 
 	</div>
@@ -57,8 +60,8 @@
 			<ul class="nav navbar-nav">
 				<li><a href="./main.ict"><span class="glyphicon glyphicon-home"></span></a></li>
 
-				<li class="dropdown">
-				<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+				<li class="dropdown teal borderYtoX">
+				<a href="donggu.ict" class="dropdown-toggle" data-toggle="dropdown" role="button"
 										aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-leaf"></span> 광주지역기업<span class="caret"></span></a>
 					<ul class="dropdown-menu ">
 						<li class="dropdown-item"><a href="donggu.ict">동구</a></li>
@@ -69,7 +72,7 @@
 					</ul>
 				</li>
 
-				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+				<li class="dropdown teal borderYtoX"><a href="gycity.ict" class="dropdown-toggle" data-toggle="dropdown" role="button"
 										aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-leaf"></span> 전남지역기업<span class="caret"></span></a>
 					<ul class="dropdown-menu">
 						<li><a href="gycity.ict">광양</a></li>
@@ -78,7 +81,7 @@
 					</ul>
 				</li>
 
-				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+				<li class="dropdown teal borderYtoX"><a href="gjofficial.ict" class="dropdown-toggle" data-toggle="dropdown" role="button"
 										aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-leaf"></span> 공공기관<span class="caret"></span></a>
 					<ul class="dropdown-menu">
 						<li><a href="gjofficial.ict">광주광역시</a></li>
@@ -86,21 +89,23 @@
 					</ul>
 				</li>
 
-				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+				<li class="dropdown teal borderYtoX"><a href="selfintrocate.ict" class="dropdown-toggle" data-toggle="dropdown" role="button"
 										aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-leaf"></span> 부가정보<span class="caret"></span></a>
 					<ul class="dropdown-menu">
-						<li><a href="selftIntro.ict">자소서 잘쓰기</a></li>
-						<li><a href="presentation_interview.ict">발표/면접 잘하기</a></li>
+
+						<li><a href="selfintrocate.ict">자소서 잘쓰기</a></li>
+
+						<li><a href="interview.ict">발표/면접 잘하기</a></li>
 					</ul>
 				</li>
 
-				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+				<li class="dropdown teal borderYtoX"><a href="nbList.ict?pageNum=1" class="dropdown-toggle" data-toggle="dropdown" role="button"
 										aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-leaf"></span> 커뮤니티<span class="caret"></span></a>
 					<ul class="dropdown-menu">
-						<li><a href="noticeBoard.ict">공지사항</a></li>
-						<li><a href="faqlist.ict?pageNum=1">FAQ</a></li>
-						<li><a href="qnaBoard.ict">QnA</a></li>
+						<li><a href="nbList.ict?pageNum=1">공지사항</a></li>
 
+						<li><a href="faqlist.ict?pageNum=1">FAQ</a></li>
+						<li><a href="qnaBoard.ict?pageNum=1">QnA</a></li>
 					</ul>
 				</li>
 			</ul>

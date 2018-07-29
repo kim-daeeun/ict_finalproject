@@ -12,7 +12,8 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>   
-
+<link href="resources/style.css" rel="stylesheet" type="text/css">
+<link href="./img/img_main/logo_ict.png" rel="shortcut icon">
 <%-- 새로 추가할 CDN 입력하는 부분 시작 --%>
 	<!-- 예 : <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script> -->
 <%-- 새로 추가할 CDN 입력하는 부분 끝--%>
@@ -71,7 +72,7 @@ small {
 
 
 </head>
-<body style="height:1020px">
+<body style="height:1080px">
 
 <%-- main_header.jsp --%>
 <%@include file="./../include/main_header.jsp"%>
@@ -94,7 +95,7 @@ small {
 		</tr>
 		<tr>
 		  <td colspan="2">
-		  <textarea cols="100" rows="20" name="content"></textarea>
+		  <textarea cols="100" rows="20" name="content" class="form-control"></textarea>
 		  </td>
 	    </tr> 	    
 	    <tr>

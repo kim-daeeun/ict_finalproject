@@ -11,6 +11,7 @@ import com.ict.ictinfo.bizinfo.dto.BizInfoDto;
 import com.ict.ictinfo.bizinfo.dto.GetBizDto;
 import com.ict.ictinfo.main.dao.MainDao;
 import com.ict.ictinfo.main.dto.MainDto;
+import com.ict.ictinfo.main.dto.MainNbDto;
 
 @Service
 public class MainServiceImpl implements MainService {
@@ -48,6 +49,11 @@ public class MainServiceImpl implements MainService {
 	public List<MainDto> selectBizInfo() {	
 		return mainDao.selectBizInfo();
 	}
-		
+	
+	@Override
+	 public List<MainNbDto> selectNoticeBoard() {
+	  return mainDao.selectNoticeBoard();
+	 }
+	
 	
 }

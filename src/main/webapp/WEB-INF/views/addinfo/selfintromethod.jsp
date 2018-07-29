@@ -4,10 +4,13 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <html>
+<title>자소서 잘쓰기</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=27703aefb48df81e1a6dd06ce7ab03f4&libraries=services"></script>
+<link href="resources/style.css" rel="stylesheet" type="text/css">
+<link href="./img/img_main/logo_ict.png" rel="shortcut icon">
 <%-- head.jsp --%>
 <%@include file="./../include/main_css.jsp"%>
 <style>
@@ -17,7 +20,8 @@
 		margin: 20px auto;	
 	}
 	#selfhead{
-		margin:30px auto;	
+		margin:30px auto;
+		margin-top:50px;
 	}
 	
 	#selfintroduce{
@@ -40,6 +44,7 @@
 		font-size:16px;
 		align:center;
 		border:none;
+		max-width:720px;
 	}
 		
 	
@@ -54,7 +59,7 @@
 	<h2 style="text-align:center" id="selfhead"> 자기소개서 작성 항목 및 방법 </h2>
 	<ul class="nav nav-pills nav-stacked nav-justified" id="selfintroduce">
 	    <li class="selfintro" id="selfintrocate"><a data-toggle="pill" href="#"> 자기소개서 작성 항목 </a></li>
-	    <li class="selfintro" id="selfintromethod"><a data-toggle="pill" href="#"> 자기소개서 작성 방법 </a></li>
+	    <li class="selfintro active" id="selfintromethod"><a data-toggle="pill" href="#"> 자기소개서 작성 방법 </a></li>
   	</ul>
 	<iframe width="720" height="360" src="https://www.youtube.com/embed/qZU-1N_gFqY" id="scr2"></iframe>
   	

@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+              "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ict.ictinfo.noticeboard.dao.NbDao">
+
+	<select id="getTotalCount" resultType="int">
+		SELECT COUNT(*) FROM noticeboard	
+	</select>	
+	
+	<select id="list" resultType="nbDtoAlias">
+	
+	 SELECT * FROM (SELECT ROWNUM RM,HUMAN.* 
+	 				FROM (SELECT articleNum, id, title,to_char(writeDate,'YYYY-MM-DD')as writeDate, depth, hit, fileStatus,
+	   							(select count(*) from nbcomments where noticeboard.articleNum=nbcomments.articleNum)as commentCount
+	     				  FROM noticeboard
+	     				  START WITH groupId=0
+	     				  CONNECT BY PRIOR articleNum=groupId
+	     				  ORDER SIBLINGS BY articleNum DESC)HUMAN
+	    				 )
+	 				WHERE RM BETWEEN #{startRow} and #{endRow}
+	 				
+	 </select>
+	 
+	 
+	 
+	 
+	 
+	<insert id="write" parameterType="nbDtoAlias" useGeneratedKeys="true" keyProperty="articleNum" keyColumn="articleNum">	
+			insert into noticeboard values(noticeboard_SEQ.NEXTVAL, #{id}, #{title}, #{content},0,0,0,SYSDATE,#{fileStatus})			
+	</insert>
+	
+	 <insert id="insertFile" parameterType="nbFileDtoAlias">
+  		INSERT INTO nbfilelist VALUES(nbfilelist_SEQ.NEXTVAL, #{storedFname}, #{articleNum}) 
+ 	</insert>	
+		 
+	<select id="getNextArticleNum" resultType="int">
+		 select noticeboard_seq.nextval from dual
+	</select>		 
+		 
+	<update id="updateHit" parameterType="String">
+		update noticeboard 
+		set hit=hit+1 
+		where articleNum=#{articleNum}
+	</update>	 
+ 
+	<select id="content" parameterType="String" resultType="nbDtoAlias"> 
+		SELECT * FROM noticeboard WHERE ARTICLENUM=#{articleNum}	
+	</select>	
+
+	<select id="getCommentCount" parameterType="String" resultType="int">
+		  SELECT COUNT(*)
+		  FROM nbCOMMENTS
+		  WHERE ARTICLENUM=#{articleNum}
+	 </select>	
+	
+	<select id="getFiles"  parameterType="String" resultType="String">			
+		  select storedFname from nbfilelist
+		  	where articleNum=#{articleNum}
+	 </select>	
+	
+	
+	<delete id="delete" parameterType="String">
+	 	DELETE FROM noticeboard 
+	 	WHERE articleNum in (select articleNum from noticeboard 
+	 										   start with articleNum=#{articleNum} 
+	 										   connect by prior articleNum=groupId)	 	
+	 	
+	</delete>	
+	
+	
+	<select id="getDeleteList" parameterType="String" resultType="String"> 
+		SELECT storedfname FROM nbfilelist WHERE ARTICLENUM=#{articleNum}	
+	</select>	
+	
+	
+	<select id="getUpdateArticle" parameterType="String" resultType="nbDtoAlias"> 
+		SELECT TITLE, CONTENT FROM noticeboard WHERE ARTICLENUM=#{articleNum}	
+	</select>
+	
+	
+	<update id="updateArticle" parameterType="nbDtoAlias">
+	    UPDATE noticeboard
+	    SET TITLE=#{title}, CONTENT=#{content}, fileStatus=#{fileStatus} 
+	    WHERE ARTICLENUM=#{articleNum}
+	 </update>
+	
+	<delete id="dbDelFileName" parameterType="List">
+	 	DELETE FROM nbfilelist 
+	 	WHERE storedFname in 
+	 	<foreach collection="list" item="storedFname" open="(" separator="," close=")">
+	 		 #{storedFname} 	
+	 	</foreach>
+	</delete>	
+
+
+	<delete id="dbDelFileName1" parameterType="List">
+	 	DELETE FROM nbfilelist 
+	 	WHERE storedFname in 
+	 	<foreach collection="array" item="storedFname" open="(" separator="," close=")">
+	 		#{storedFname} 	
+	 	</foreach>
+	</delete>	
+	
+	
+	
+	<insert id="reply" parameterType="nbDtoAlias" useGeneratedKeys="true" keyProperty="articleNum" keyColumn="articleNum">
+		insert into noticeboard values(noticeboard_seq.nextval, #{id}, #{title}, #{content},#{depth}+1,0,#{groupId},SYSDATE, #{fileStatus})	
+	</insert>
+	
+
+
+	<select id="nbSearch" resultType="nbDtoAlias">
+	
+	 SELECT * FROM (SELECT ROWNUM RM, HUMAN.* 
+	 				FROM (SELECT articleNum, id, title,to_char(writeDate,'YYYY-MM-DD')as writeDate, depth, hit, fileStatus, content,
+	   							(select count(*) from nbcomments where noticeboard.articleNum=nbcomments.articleNum)as commentCount
+	     				  FROM noticeboard
+	     				  START WITH groupId=0
+	     				  CONNECT BY PRIOR articleNum=groupId
+	     				  ORDER SIBLINGS BY articleNum DESC) HUMAN
+	    				 )
+	 where RM BETWEEN #{startRow} and #{endRow} 
+	 and (<include refid="search"></include>)	 				
+	 </select>
+	 
+	 <select id="getTotalCountNbSearch" resultType="int">
+		SELECT COUNT(*) FROM noticeboard
+		where (<include refid="search"></include>)
+	</select>
+	 
+	 
+	 
+		<!-- sql code 조각 -->
+		<!-- 반복되는 sql의 일부를 sql태그를 이용하여 따로 빼둘수 있다. -->
+		<sql id="search">
+		    <choose>
+		        <!-- 검색옵션이 전체 검색일 경우 -->
+		        <when test="searchOption == 'all'">
+		            id like '%'||#{keyword}||'%'
+		            OR content like '%'||#{keyword}||'%'
+		            OR title like '%'||#{keyword}||'%'
+		        </when>
+		        <!-- 전체 검색이 아닐 경우 -->
+		        <otherwise>
+		            ${searchOption} like '%'||#{keyword}||'%'
+		        </otherwise>
+		    </choose>
+		</sql>	
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

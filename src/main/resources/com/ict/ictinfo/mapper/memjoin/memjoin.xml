@@ -35,4 +35,11 @@
 		WHERE id=#{id}
 	</delete>
 	
+	<select id="joinInfo" parameterType="String" resultType="memjoin">
+	  SELECT *
+	  FROM ICTMEMJOIN
+	  WHERE ID=#{id}
+	</select>
+	
+	
 </mapper>

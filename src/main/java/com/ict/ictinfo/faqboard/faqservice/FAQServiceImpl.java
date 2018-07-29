@@ -17,7 +17,7 @@ import com.ict.ictinfo.faqboard.faqdao.FAQDao;
 import com.ict.ictinfo.faqboard.faqdto.FAQDto;
 import com.ict.ictinfo.faqboard.faqdto.FileDto;
 import com.ict.ictinfo.faqboard.page.MediaUtils;
-import com.ict.ictinfo.faqboard.page.Page;
+import com.ict.ictinfo.faqboard.page.faqPage;
 
 @Service
 public class FAQServiceImpl implements FAQService {
@@ -29,7 +29,7 @@ public class FAQServiceImpl implements FAQService {
 	private String saveDir;
 	
 	@Autowired
-	private Page page;
+	private faqPage page;
 	
 	@Resource(name="pageSize")
 	private int pageSize;
@@ -154,6 +154,7 @@ public class FAQServiceImpl implements FAQService {
 
 	@Override
 	public void content(String articleNum,int fileStatus, Model model) {
+		faqdao.updateHit(articleNum);
 		FAQDto article=faqdao.content(articleNum);
 		article.setCommentCount(faqdao.getCommentCount(articleNum));
 		model.addAttribute("article",article);

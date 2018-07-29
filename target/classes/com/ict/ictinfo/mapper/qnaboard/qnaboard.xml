@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+              "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ict.ictinfo.qnaboard.dao.QnaBoardDao">
+
+	<select id="qnaList" resultType="qnaArticle">
+		select *
+		from (select rownum rm, qna.*
+      		  from (select articleNum,id,title,to_char(writeDate,'YYYY-MM-DD') as writeDate,depth,hit,fileStatus,
+      		  (select count(*)
+      		   from QNACOMMENTS
+      		   where QNABOARD.articleNum=QNACOMMENTS.articleNum) as commentCount
+      				from QNABOARD
+      				start with groupId=0
+      				CONNECT BY PRIOR articleNum=groupId
+      				order siblings by articleNum desc) qna
+     	)
+		where rm between #{startRow} and #{endRow}
+	</select>
+	
+	<insert id="qnaWrite" parameterType="qnaArticle" useGeneratedKeys="true" keyProperty="articleNum" keyColumn="articleNum">
+		insert into QNABOARD values(QNABOARD_SEQ.NEXTVAL, #{id}, #{title}, #{content},0,0,0,SYSDATE,#{fileStatus})
+	</insert>
+
+	<select id="getTotalCount" resultType="int">
+		SELECT COUNT(*)
+		FROM QNABOARD
+	</select>
+	
+	<select id="qnaContent" parameterType="String" resultType="qnaArticle">
+		SELECT QNABOARD.*,(select count(*)
+						from QNACOMMENTS
+						where QNABOARD.articleNum=QNACOMMENTS.articleNum) as commentCount
+		FROM QNABOARD
+		WHERE ARTICLENUM=#{articleNum}
+	</select>
+	
+	<update id="updateHit" parameterType="String">
+		update QNABOARD 
+		set hit=hit+1 
+		where articleNum=#{articleNum}
+	</update>
+	
+	
+	<select id="getQnacommentCount" parameterType="String" resultType="int">
+		SELECT COUNT(*)
+		FROM QNACOMMENTS
+		WHERE ARTICLENUM=#{articleNum}
+	</select>
+	
+	<insert id="qnaReply" parameterType="qnaArticle" useGeneratedKeys="true" keyProperty="articleNum" keyColumn="articleNum">
+		INSERT INTO QNABOARD VALUES(QNABOARD_SEQ.NEXTVAL, #{id}, #{title}, #{content},#{depth}+1,0,#{groupId},SYSDATE,#{fileStatus})
+	</insert>
+	
+	<select id="qnaUpdate" parameterType="String" resultType="qnaArticle">
+		SELECT TITLE,CONTENT FROM QNABOARD WHERE ARTICLENUM=#{articleNum}
+	</select>
+	
+	<update id="qnaUpdates" parameterType="qnaArticle">
+	update QNABOARD
+	set title=#{title}, content=#{content}, fileStatus=#{fileStatus}
+	where articleNum=#{articleNum}
+	</update>
+	
+	<delete id="qnaDelete" parameterType="String">
+		DELETE
+		FROM QNABOARD
+		WHERE ARTICLENUM in(SELECT ARTICLENUM
+							FROM QNABOARD
+							START WITH ARTICLENUM=#{articleNum}
+							CONNECT BY PRIOR articleNum=groupId)
+	</delete>
+	
+	<select id="getQnacontentFiles" resultType="qnaFile" parameterType="String">
+		select fileNum, storedFname
+		from QNAFILELIST
+		where articleNum=#{articleNum}
+	</select>
+	
+	<insert id="insertQnaFile" parameterType="qnaFile">
+		INSERT INTO QNAFILELIST VALUES(QNAFILELIST_SEQ.NEXTVAL,#{storedFname},#{articleNum})
+	</insert>
+<!-- 	
+	<insert id="insertQnaFile" parameterType="qnaFile">
+		INSERT INTO QNAFILELIST VALUES(QNAFILELIST_SEQ.NEXTVAL,#{storedFname},#{articleNum})
+	</insert>
+	(select max(no) from board) -->
+	
+	<select id="getFiles" resultType="String" parameterType="String">
+		select storedFname
+		from QNAFILELIST
+		where articleNum=#{articleNum}
+	</select>
+	
+	<select id="getStoredFname" resultType="String"  parameterType="String">
+		select storedFname
+		from QNAFILELIST
+		where fileNum=#{fileNum}
+	</select>
+	
+	<delete id="dbDelFileList" parameterType="List">
+		delete
+		from QNAFILELIST
+		where storedFname IN
+		<foreach collection="list" item="storedFname" open="(" separator="," close=")">
+			#{storedFname}
+		</foreach>
+	</delete>
+	
+	 <delete id="dbDelFileName" >
+<!--  <delete id="dbDelFileName1" parameterType="Array">-->
+		delete
+		from QNAFILELIST
+		where storedFname IN
+		 <foreach collection="array" item="storedFname" open="(" separator="," close=")">
+    		#{storedFname}  
+  		</foreach>
+	</delete> 
+	
+	<select id="getDeleteList" parameterType="String" resultType="String"> 
+  		SELECT storedFname FROM QNAFILELIST WHERE ARTICLENUM=#{articleNum} 
+ 	</select>
+
+	
+</mapper>

@@ -12,6 +12,7 @@ public interface FAQDao {
 	public void write(FAQDto article);
 	public int getTotalCount();
 	public FAQDto content(String articleNum);
+	public void updateHit(String articleNum);
 	public void reply(FAQDto article);
 	public void delete(String articleNum);
 	public FAQDto getUpdateArticle(String articleNum);
@@ -22,6 +23,7 @@ public interface FAQDao {
 	public List<String> getDeleteList(String articleNum);
 	public void dbDelFileName(List<String> delFileList);
 	public void dbDelFileName1(String[] deleteFileName);
+
 	
 	
 	

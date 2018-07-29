@@ -8,6 +8,6 @@
 </head>
 <body>
 서버 오류입니다<br />
-<a href="/ictinfo/human.bbs">메인으로 가기</a>
+<a href="/ictinfo/main.ict">메인으로 가기</a>
 </body>
 </html>

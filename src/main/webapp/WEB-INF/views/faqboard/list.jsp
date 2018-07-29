@@ -12,7 +12,8 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>   
-
+<link href="resources/style.css" rel="stylesheet" type="text/css">
+<link href="./img/img_main/logo_ict.png" rel="shortcut icon">
 <%-- 새로 추가할 CDN 입력하는 부분 시작 --%>
 	<!-- 예 : <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script> -->
 <%-- 새로 추가할 CDN 입력하는 부분 끝--%>
@@ -25,45 +26,58 @@
 
 <style>
 .container_body{
-	margin : 0px auto;	
+	margin : 0px auto;
+	text-align:center;
+	width:1080px;
+	min-height:720px;
 }
 
 h2 {
-	margin:50px 0px;
+	margin-top:50px;
 	text-align: center;
 }
 
 #faqlist_write{
-	margin-left:1120px;
+	margin-left:790px;
 }
 
+h4 {
+	margin:10px 0px;
+	text-align:center;
+}
 
+#mainList{
+	margin:10px auto;
+	text-align:center;
+	max-width:90%;
+	font-size:15px;
+	line-height: 1.5em;
+}
 
 </style>
 
 
 </head>
-<body style="height:1020px">
+<body style="height:1080px">
 
 <%-- main_header.jsp --%>
 <%@include file="./../include/main_header.jsp"%>
 
 	<div class="container_body">
+	<h2>FAQ</h2>					
+	<h4>글목록(전체 글:${totalCount })</h4>
 	
-	<h2 style="text-align:center">FAQ</h2>					
-		
-	<div id="container">
-	<h2>글목록(전체 글:${totalCount })</h2>
-	<table width="700" >
+	
+	<table width="700" id="mainList">
 		<tr>
 			<td align="right" >
 				<input type=button" onclick="document.location.href='/ictinfo/faqwrite.ict'" 
-				class="btn btn-primary" id="faqlist_write" value="글쓰기"><br>
+				class="btn btn-primary" id="faqlist_write" value="글쓰기"><br><br>
 			</td>
 		</tr>
 	</table>
 	
-	<table border="1" width="700" cellpadding="2" cellspacing="2" align="center"> 
+	<table id="mainList" class="table table-hover" width="700" cellpadding="2" cellspacing="2" align="center"> 
 	    <tr height="30" > 
 	      <td align="center"  width="50"  >번 호</td> 
 	      <td align="center"  width="250" >제   목</td> 
@@ -79,18 +93,17 @@ h2 {
 			</td>
 		    <td  width="250" >  
 		      <c:if test="${article.depth > 0}">
-			  	<img src="images/image3.png" width="${10 * article.depth}"  height="16">
-			    <img src="images/cut.gif">
+			  	<img src="./img/img_faqboard/answer.jpg" width="25px"   height="16">
 			  </c:if>
 			  <c:if test="${article.depth == 0}">
-			    <img src="images/image3.png" width="0"  height="16">
+			    <img src="./img/img_faqboard/faq.jpg" width="${10 * article.depth}"   height="16">
 			  </c:if>         
 		      <a href="faqcontent.ict?articleNum=${article.articleNum}&pageNum=${pageNum}&fileStatus=${article.fileStatus}">
 		          ${article.title}
 		           <c:if test="${article.commentCount!=0 }">(${article.commentCount})</c:if> 
 		      </a> 
 		          <c:if test="${article.hit >= 20}">
-		            <img src="images/image3.png" border="0" height="16">
+		            <img src="./img/img_faqboard/faq.jpg" width="${10 * article.depth}"  height="16">
 				  </c:if>
 			</td>
 		    <td align="center"  width="100">${article.id}</td>
@@ -106,7 +119,7 @@ h2 {
 </table><br>
 </div>
 			
-	</div> <!-- container_body 끝-->	
+	 <!-- container_body 끝-->	
 
 <%-- main_footer.jsp --%>
 <%@include file="./../include/main_footer.jsp"%>

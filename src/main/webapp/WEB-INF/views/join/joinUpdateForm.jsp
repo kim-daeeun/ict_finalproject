@@ -4,10 +4,15 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>회원정보수정</title>
+<title>회원정보 수정</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<link href="resources/style.css" rel="stylesheet" type="text/css">
+<link href="./img/img_main/logo_ict.png" rel="shortcut icon">
+<%@include file="./../include/main_css.jsp"%>
+
 <style>
 	.container_body{
 		max-width:500px;
@@ -44,6 +49,63 @@
 		float:right;
 	}
 </style>
+
+</head>
+
+
+<body style="height:1020px">
+
+	<%-- main_header.jsp --%>
+	<%@include file="./../include/main_header.jsp"%>
+	<div class="container_body">
+  		<h2 align="center">회원정보 수정</h2>
+		<form action="/ictinfo/joinUpdate.ict" method="post" >
+		<div class="form-group">
+     		<label for="name">이름:</label>
+      		<input type="text" class="form-control" id="name" value="${memjoin.name}" name="name">
+    	</div>
+		<div class="form-group">
+      <label for="id">ID :</label>
+      <input type="text" class="form-control" id="id" value="${id}" readonly="readonly"  name="id">
+    </div>
+    <div id="idCheckStatus"></div>
+	<div class="form-group">
+      <label for="password">비밀번호 :</label>
+      <input type="password" class="form-control" id="password" value="${memjoin.password}" name="password">
+    </div>
+	<div class="form-group">
+      <label for="password_check">비밀번호 확인:</label>
+      <input type="password" class="form-control" id="password_check" placeholder="비밀번호를 다시 한번 입력해주세요" name="password_check">
+      <div id="passCheckStatus"></div>
+    </div>
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" class="form-control" id="email"  value="${memjoin.email}" name="email">
+    </div>
+    <div class="form-group">
+      <label for="phoneNumber">전화번호:</label>
+      <input type="text" class="form-control" id="phoneNumber" value="${memjoin.phoneNumber}" pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}" name="phoneNumber">
+    </div>
+    <div class="form-group">
+      <label for="address1">주소 : </label>
+      <input type="text" class="form-control" id="address1"  value="${memjoin.address1}" name="address1">
+      <label for="address2">상세주소 : </label><br/>
+      <input type="text" class="form-control" id="address2" value="${memjoin.address2}" name="address2" >
+      <button type="button" class="btn btn-default btn-info" id="addrSearch"> 주소검색</button>
+    </div>
+    <div class="form-group">
+	    <button type="submit" class="btn btn-default" id="join">확인</button>
+	    <button type="reset" class="btn btn-default" id="cancel"  onclick="document.location.href='/ictinfo/joinInfo.ict'">취소 </button>
+    </div>
+  	</form>
+	</div>
+
+<%-- main_footer.jsp --%>
+<%@include file="./../include/main_footer.jsp"%>
+
+<%-- plugin_js.jsp --%>
+<%@include file="./../include/main_js.jsp"%>
+
 <script>
 $.ajaxSetup({
 	type : "POST",
@@ -160,76 +222,6 @@ $.ajaxSetup({
 	}
 
 </script>
-<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-</head>
-<%-- <body>
 
-<form action="/ictinfo/joinUpdate.bbs" method="post" >
-	<fieldset>
-		<legend>회원정보수정</legend>
-		<!-- <label for="id"> I D : <input type="text" name="id" id="id" required="required"></label><br />
-		<label for="pass">PASS : <input type="text" name="pass" id="pass" required="required"></label> -->
-		<label for="name"> 이름 : <input type="text" name="name" value="${memjoin.name}" id="name"> </label><br />
-		<label for="id"> I D : <input type="text" name="id" id="id" value="${id}" readonly="readonly"></label><br />
-		<label for="password">비밀번호 : <input type="password" name="password" id="password" value="${memjoin.password}"></label> <br />
-		<label for="password_check">비밀번호 확인 : <input type="password" name="password_check" id="password_check"></label> <br />
-		<div id="passCheckStatus"></div>
-<!--           <label for="email">mail : <input type="text" name="email" id="email"></label><br /> -->
-			<!-- 사파리에서는 "<input type="email"이 지원안됨" -->
-		<label for="email"> Email : <input type="email" name="email" id="email" value="${memjoin.email}"></label><br />
-		<label for="phoneNumber"> TEL : <input type="text" name="phoneNumber" value="${memjoin.phoneNumber}"
-										pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}"></label><br />
-		<label for="address" >주소 : <input type="text" name="address1" id="address1" value="${memjoin.address1}">
-														<input type="text" name="address2" id="address2" value="${memjoin.address2}"></label>
-														<input type="button" value="주소찾기" id="addrSearch"><br />
-          <input type="submit" value="확인">
-          <input type="reset" value="취소"> 
-		</fieldset>
-	</form>           
-</body> --%>
-
-<body>
-		<div class="container_body">
-  <h2 align="center">ICT 취업생을 위한 정보망</h2>
-<form action="/ictinfo/joinUpdate.bbs" method="post" >
-	<div class="form-group">
-      <label for="name">이름:</label>
-      <input type="text" class="form-control" id="name" value="${memjoin.name}" name="name">
-    </div>
-	<div class="form-group">
-      <label for="id">ID :</label>
-      <input type="text" class="form-control" id="id" value="${id}" readonly="readonly"  name="id">
-    </div>
-    <div id="idCheckStatus"></div>
-	<div class="form-group">
-      <label for="password">비밀번호 :</label>
-      <input type="password" class="form-control" id="password" value="${memjoin.password}" name="password">
-    </div>
-	<div class="form-group">
-      <label for="password_check">비밀번호 확인:</label>
-      <input type="password" class="form-control" id="password_check" placeholder="비밀번호를 다시 한번 입력해주세요" name="password_check">
-      <div id="passCheckStatus"></div>
-    </div>
-    <div class="form-group">
-      <label for="email">Email:</label>
-      <input type="email" class="form-control" id="email"  value="${memjoin.email}" name="email">
-    </div>
-    <div class="form-group">
-      <label for="phoneNumber">전화번호:</label>
-      <input type="text" class="form-control" id="phoneNumber" value="${memjoin.phoneNumber}" pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}" name="phoneNumber">
-    </div>
-    <div class="form-group">
-      <label for="address1">주소 : </label>
-      <input type="text" class="form-control" id="address1"  value="${memjoin.address1}" name="address1">
-      <label for="address2">상세주소 : </label><br/>
-      <input type="text" class="form-control" id="address2" value="${memjoin.address2}" name="address2" >
-      <button type="button" class="btn btn-default btn-info" id="addrSearch"> 주소검색</button>
-    </div>
-    <div class="form-group">
-	    <button type="submit" class="btn btn-default" id="join">확인</button>
-	    <button type="reset" class="btn btn-default" id="cancel">취소 </button>
-    </div>
-  </form>
-</div>
 </body>
 </html>

@@ -25,11 +25,26 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
  		<typeAlias alias="getbiz" type="com.ict.ictinfo.bizinfo.dto.GetBizDto" />
  		<typeAlias alias="mainDto" type="com.ict.ictinfo.main.dto.MainDto" />
  		<typeAlias alias="getMainDto" type="com.ict.ictinfo.main.dto.GetMainDto" />
-<!--  		<typeAlias alias="file" type="com.ict.ictinfo.memjoin.dto.FileDto" />
+
+<!--  	<typeAlias alias="file" type="com.ict.ictinfo.memjoin.dto.FileDto" />
  		<typeAlias alias="comment" type="com.ict.ictinfo.memjoin.dto.CommentDto" /> -->
+ 		<typeAlias alias="mainNbDto" type="com.ict.ictinfo.main.dto.MainNbDto" />
+ 		<typeAlias alias="nbDtoAlias" type="com.ict.ictinfo.noticeboard.dto.NbDto" />
+ 		<typeAlias alias="nbFileDtoAlias" type="com.ict.ictinfo.noticeboard.dto.NbFileDto" />	
+ 		<typeAlias alias="nbCommentDtoAlias" type="com.ict.ictinfo.nbcomment.dto.NbCommentDto" />
+ 		
+ 		<typeAlias alias="adminDtoAlias" type="com.ict.ictinfo.admin.dto.AdminDto" />
+ 		
+ 		
+ 		
+ 		
  		<typeAlias alias="faq_article" type="com.ict.ictinfo.faqboard.faqdto.FAQDto" />
  		<typeAlias alias="faq_comment" type="com.ict.ictinfo.faqboard.comment.dto.CommentDto" />
  		<typeAlias alias="faq_file" type="com.ict.ictinfo.faqboard.faqdto.FileDto" />
+ 		
+ 		<typeAlias alias="qnaArticle" type="com.ict.ictinfo.qnaboard.dto.QnaBoardDto" />
+ 		<typeAlias alias="qnaFile" type="com.ict.ictinfo.qnaboard.dto.QnaFileDto" />
+ 		<typeAlias alias="qnaComment" type="com.ict.ictinfo.qnacomment.dto.QnaCommentDto" />
  	</typeAliases>
  	
  </configuration>

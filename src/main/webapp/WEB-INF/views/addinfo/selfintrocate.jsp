@@ -4,10 +4,13 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <html>
+<title>자소서 잘쓰기</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=27703aefb48df81e1a6dd06ce7ab03f4&libraries=services"></script>
+<link href="resources/style.css" rel="stylesheet" type="text/css">
+<link href="./img/img_main/logo_ict.png" rel="shortcut icon">
 <%-- head.jsp --%>
 <%@include file="./../include/main_css.jsp"%>
 <style>
@@ -16,8 +19,10 @@
 		text-align:center;
 		margin: 20px auto;	
 	}
+	
 	#selfhead{
-		margin:30px auto;	
+		margin:30px auto;
+		margin-top:50px;	
 	}
 	
 	#selfintroduce{
@@ -25,23 +30,31 @@
 		margin: 0 auto;
 		max-width:40%;
 	}
+	
 	.selfintro{
 		margin:2px 20px;
 		text-align:center;
 		border:1px solid #FFFFFF;
 		background-color:#EFF0FF;
 	}
+	
 	#scr1{
 		margin: 40px auto;
 	}
+	
 	textarea{
 		margin:10px auto;
 		font-weight:bold;
 		font-size:16px;
 		align:center;
 		border:none;
+		max-width:720px;
 	}
-		
+	
+	.self{
+		margin-left:180px;
+		max-width:600px;
+	}
 	
 </style>
 
@@ -53,13 +66,14 @@
 	
 	<h2 style="text-align:center" id="selfhead"> 자기소개서 작성 항목 및 방법 </h2>
 	<ul class="nav nav-pills nav-stacked nav-justified" id="selfintroduce">
-	    <li class="selfintro" id="selfintrocate"><a data-toggle="pill" href="#"> 자기소개서 작성 항목 </a></li>
+	    <li class="selfintro active" id="selfintrocate"><a data-toggle="pill" href="#"> 자기소개서 작성 항목 </a></li>
 	    <li class="selfintro" id="selfintromethod"><a data-toggle="pill" href="#"> 자기소개서 작성 방법 </a></li>
   	</ul>
   	<iframe width="720" height="360" src="https://www.youtube.com/embed/DL0JTwZCWXk" id="scr1"></iframe>
   	
-  	
+  	<div class="self">
   	<textarea cols="100" rows="50">
+  	
 1.성장배경
 
 자신을 핵심적이고 뚜렷하게 부각시킬 수 있는 유년의 에피소드나 가족관계에 얽힌 이야기 혹은 
@@ -91,9 +105,9 @@
 자기소개서를 통해 기업의 입장에서 실질적인 관심사가 되는 부분이다. 
 실제 기업측에서는 능력을 인정받는 사원들이 자기가 맡은 분야에서 성취감이나 의욕감을 느끼지 못해
  퇴사하는 경우를 많이 경험하기 때문이다.
-기본적으로 강한 의지를 담되, 지원하려는 기업의 구체적인 환경에 대한 사전지식 속에서 솔직하게 쓰는 것이 가장 좋은 방법이다.		
+기본적으로 강한 의지를 담되, 지원하려는 기업의 구체적인 환경에 대한 사전지식 속에서 솔직하게 쓰는 것이 가장 좋은 방법이다.	
   	</textarea>
-
+	</div>
 	</div> <!-- cotainer끝-->	
 
 <script>

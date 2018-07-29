@@ -31,6 +31,12 @@ public class MemJoinDaoImpl implements MemJoinDao {
 	}
 
 	@Override
+	public MemJoinDto joinInfo(String id) {
+		
+		return sqlSession.selectOne(nameSpace+".joinInfo",id);
+	}
+
+	@Override
 	public void joinUpdate(MemJoinDto memjoin) {
 		
 		sqlSession.update(nameSpace+".joinUpdate",memjoin);
@@ -43,8 +49,8 @@ public class MemJoinDaoImpl implements MemJoinDao {
 	}
 
 	@Override
-	public void joinDelete(MemJoinDto memjoin) {
-		sqlSession.delete(nameSpace+".joinDelete",memjoin);
+	public void joinDelete(String id) {
+		sqlSession.delete(nameSpace+".joinDelete",id);
 		
 	}
 	

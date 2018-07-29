@@ -4,10 +4,13 @@
 
 <!DOCTYPE html>
 <html>
+<title>로그인</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link href="resources/style.css" rel="stylesheet" type="text/css">
+<link href="./img/img_main/logo_ict.png" rel="shortcut icon">
 <%-- head.jsp --%>
 <%@include file="./../include/main_css.jsp"%>
 <style>
@@ -31,7 +34,8 @@ h2 {
 }
 
 #id, #password{
-	width:500px;
+	width:250px;
+	margin-left:120px;
 }
 
 #error1{
@@ -47,9 +51,10 @@ h2 {
 }
 
 #main{
-	margin-top:50px;
-	width:500px;
+	
+	width:200px;
 	height:200px;
+	margin-left:145px;
 }
 
 img{
@@ -108,6 +113,16 @@ img{
  
  margin-left:130px;
 }
+
+#loginchkbtn{
+	margin-left:120px;
+	width:250px;
+}
+
+#login_join, #login_cancel{
+	margin-left:30px;
+
+}
 </style>
 
 <body style="height:1020px">
@@ -119,16 +134,14 @@ img{
 
 	<div id="container_body">
 
-			<h2>ICT 취준생을 위한 정보망</h2>
+			<h2>로그인</h2>
 			
 			
 		<form action="login.ict" method="post" id="loginForm" class="login">	
 
-			 <img src="./img/img_login/img_logintop.jpg" id="main">
+			 <img src="./img/img_login/img_login.png" id="main">
 
 
-
-	
 			<!-- 아이디가 입력되지 않은 경우 -->
 			<div id="input_id">
 			   <div id="explain">
@@ -172,8 +185,8 @@ img{
 			<input type="password" name="pass" id="password" class="form-control" placeholder="password"></label><br>
 			
 			<input type="button" value="로그인" class="btn btn-lg btn-primary btn-block" id="loginchkbtn"><br>
-			<input type="button" value="회원가입" class="btn">
-			<input type="reset" value="취소" class="btn">
+			<input type="button" value="회원가입" class="btn" id="login_join" onclick="document.location.href='/ictinfo/joinForm.ict'">
+			<input type="reset" value="돌아가기" class="btn" id="login_cancel" onclick="document.location.href='/ictinfo/main.ict'">
 	</form>
 	</div>
 <%-- 여기 위까지 코드를 작성할것 --%>
@@ -258,7 +271,7 @@ $(function(){
 
 		   let backPageUrl=$("#backpage").val();  
 		   document.location.href="/ictinfo/mainLoginOk.ict?id="+temp_id.value+"&backPageUrl="+backPageUrl;
-
+			
 	});  
  });
 

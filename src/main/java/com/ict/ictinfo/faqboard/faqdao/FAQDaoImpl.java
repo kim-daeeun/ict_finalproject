@@ -23,6 +23,12 @@ public class FAQDaoImpl implements FAQDao {
 	public FAQDto content(String articleNum) {
 		return sqlSession.selectOne(nameSpace+".content", articleNum);
 	}
+	
+
+	@Override
+	public void updateHit(String articleNum) {
+		sqlSession.update(nameSpace+".updateHit", articleNum);
+	}
 
 	@Override
 	public int getTotalCount() {
